@@ -147,3 +147,5 @@ dolphinscheduler-ui/dist/js/login/index.291b8e3.js.map
 dolphinscheduler-ui/dist/lib/external/
 dolphinscheduler-ui/src/js/conf/home/pages/projects/pages/taskInstance/index.vue
 /dolphinscheduler-dao/src/main/resources/dao/data_source.properties
+dolphinscheduler-ui/package.json
+dolphinscheduler-rpc/src/main/java/org/apache/dolphinscheduler/rpc
