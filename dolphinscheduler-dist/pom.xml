@@ -256,7 +256,7 @@
                                                 ${basedir}/../dolphinscheduler-server/src/main/resources
                                             </location>
                                             <includes>
-                                                <include>config/*.*</include>
+                                                <include>*.*</include>
                                             </includes>
                                         </source>
 
