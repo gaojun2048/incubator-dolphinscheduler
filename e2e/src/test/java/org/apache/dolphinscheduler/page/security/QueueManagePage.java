@@ -37,14 +37,18 @@ public class QueueManagePage extends PageCommon {
      */
     public boolean createQueue() throws InterruptedException {
         // click queue manage
+        System.out.println("start click queue manage button");
         clickElement(QueueManageLocator.CLICK_QUEUE_MANAGE);
-        Thread.sleep(1000);
+
+        //determine whether the create queue button exists
+        ifTextExists(QueueManageLocator.CLICK_CREATE_QUEUE,QueueManageData.CREATE_QUEUE);
 
         // click  create queue button
-        clickElement(QueueManageLocator.CLICK_CREATE_QUEUE);
-        Thread.sleep(1000);
+        System.out.println("start click create queue  button");
+        clickButton(QueueManageLocator.CLICK_CREATE_QUEUE);
 
         // input queue data
+        System.out.println("start input queue");
         sendInput(QueueManageLocator.INPUT_QUEUE_NAME, QueueManageData.QUEUE_NAME);
 
         sendInput(QueueManageLocator.INPUT_QUEUE_VALUE, QueueManageData.QUEUE_VALUE);
@@ -53,7 +57,7 @@ public class QueueManagePage extends PageCommon {
         clickButton(QueueManageLocator.SUBMIT_QUEUE);
 
         // Whether to enter the specified page after submit
-        return ifTitleContains(QueueManageData.QUEUE_MANAGE);
+        return ifTextExists(QueueManageLocator.LIST_QUEUE_NAME, QueueManageData.QUEUE_NAME);
     }
 
 
@@ -64,22 +68,21 @@ public class QueueManagePage extends PageCommon {
      */
     public boolean editQueue() throws InterruptedException {
         // click queue manage
-        Thread.sleep(1000);
         clickElement(QueueManageLocator.CLICK_QUEUE_MANAGE);
-        Thread.sleep(1000);
+
+        ifTextExists(QueueManageLocator.LIST_QUEUE_NAME, QueueManageData.QUEUE_NAME);
 
         // click  edit queue button
-        clickElement(QueueManageLocator.CLICK_EDIT_QUEUE);
-        Thread.sleep(1000);
+        clickButton(QueueManageLocator.CLICK_EDIT_QUEUE);
 
         // input queue data
-        sendInput(QueueManageLocator.INPUT_QUEUE_NAME, QueueManageData.EDIT_QUEUE_NAME);
-        sendInput(QueueManageLocator.INPUT_QUEUE_VALUE, QueueManageData.EDIT_QUEUE_VALUE);
+        clearSendInput(QueueManageLocator.INPUT_QUEUE_NAME, QueueManageData.EDIT_QUEUE_NAME);
+        clearSendInput(QueueManageLocator.INPUT_QUEUE_VALUE, QueueManageData.EDIT_QUEUE_VALUE);
 
         // click  button
         clickButton(QueueManageLocator.SUBMIT_QUEUE);
 
         // Whether to enter the specified page after submit
-        return ifTitleContains(QueueManageData.QUEUE_MANAGE);
+        return ifTextExists(QueueManageLocator.LIST_QUEUE_NAME, QueueManageData.EDIT_QUEUE_NAME);
     }
 }

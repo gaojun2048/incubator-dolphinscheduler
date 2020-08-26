@@ -48,7 +48,7 @@
     <m-list-box>
       <div slot="text">{{$t('Main jar package')}}</div>
       <div slot="content">
-        <treeselect v-model="mainJar" :options="mainJarLists" :disable-branch-nodes="true" :normalizer="normalizer" :disabled="isDetails" :placeholder="$t('Please enter main jar package')">
+        <treeselect v-model="mainJar" maxHeight="200" :options="mainJarLists" :disable-branch-nodes="true" :normalizer="normalizer" :disabled="isDetails" :placeholder="$t('Please enter main jar package')">
           <div slot="value-label" slot-scope="{ node }">{{ node.raw.fullName }}</div>
         </treeselect>
       </div>
@@ -86,7 +86,7 @@
             :disabled="isDetails"
             type="input"
             v-model="jobManagerMemory"
-            :placeholder="$t('Please enter the number of Executor')"
+            :placeholder="$t('Please enter jobManager memory')"
             style="width: 200px;"
             autocomplete="off">
         </x-input>
@@ -97,7 +97,7 @@
             :disabled="isDetails"
             type="input"
             v-model="taskManagerMemory"
-            :placeholder="$t('Please enter the Executor memory')"
+            :placeholder="$t('Please enter the taskManager memory')"
             style="width: 186px;"
             autocomplete="off">
         </x-input>
@@ -110,7 +110,7 @@
                   :disabled="isDetails"
                   type="input"
                   v-model="slot"
-                  :placeholder="$t('Please enter driver core number')"
+                  :placeholder="$t('Please enter solt number')"
                   style="width: 200px;"
                   autocomplete="off">
         </x-input>
@@ -122,7 +122,7 @@
                   :disabled="isDetails"
                   type="input"
                   v-model="taskManager"
-                  :placeholder="$t('Please enter driver memory use')"
+                  :placeholder="$t('Please enter taskManager number')"
                   style="width: 186px;"
                   autocomplete="off">
         </x-input>
@@ -158,7 +158,7 @@
     <m-list-box>
       <div slot="text">{{$t('Resources')}}</div>
       <div slot="content">
-        <treeselect v-model="resourceList" :multiple="true" :options="mainJarList" :normalizer="normalizer" :disabled="isDetails" :value-consists-of="valueConsistsOf" :placeholder="$t('Please select resources')">
+        <treeselect v-model="resourceList" :multiple="true" maxHeight="200" :options="mainJarList" :normalizer="normalizer" :disabled="isDetails" :value-consists-of="valueConsistsOf" :placeholder="$t('Please select resources')">
           <div slot="value-label" slot-scope="{ node }">{{ node.raw.fullName }}</div>
         </treeselect>
       </div>
@@ -210,12 +210,10 @@
         slot: 1,
         // Driver Number of memory
         taskManager: '2',
-        // Executor Number
+        // jobManager Memory
         jobManagerMemory: '1G',
-        // Executor Number of memory
+        // taskManager Memory
         taskManagerMemory: '2G',
-        // Executor Number of cores
-        executorCores: 2,
         // Command line argument
         mainArgs: '',
         // Other parameters
@@ -290,37 +288,22 @@
         }
 
         if (!this.jobManagerMemory) {
-          this.$message.warning(`${i18n.$t('Please enter the number of Executor')}`)
+          this.$message.warning(`${i18n.$t('Please enter jobManager memory')}`)
           return false
         }
 
         if (!Number.isInteger(parseInt(this.jobManagerMemory))) {
-          this.$message.warning(`${i18n.$t('The number of Executors should be a positive integer')}`)
+          this.$message.warning(`${i18n.$t('Memory should be a positive integer')}`)
           return false
         }
 
         if (!this.taskManagerMemory) {
-          this.$message.warning(`${i18n.$t('Please enter the Executor memory')}`)
-          return false
-        }
-
-        if (!this.taskManagerMemory) {
-          this.$message.warning(`${i18n.$t('Please enter the Executor memory')}`)
+          this.$message.warning(`${i18n.$t('Please enter the taskManager memory')}`)
           return false
         }
 
         if (!_.isNumber(parseInt(this.taskManagerMemory))) {
           this.$message.warning(`${i18n.$t('Memory should be a positive integer')}`)
-          return false
-        }
-
-        if (!this.executorCores) {
-          this.$message.warning(`${i18n.$t('Please enter ExecutorPlease enter Executor core number')}`)
-          return false
-        }
-
-        if (!Number.isInteger(parseInt(this.executorCores))) {
-          this.$message.warning(`${i18n.$t('Core number should be positive integer')}`)
           return false
         }
 
@@ -351,7 +334,6 @@
           taskManager: this.taskManager,
           jobManagerMemory: this.jobManagerMemory,
           taskManagerMemory: this.taskManagerMemory,
-          executorCores: this.executorCores,
           mainArgs: this.mainArgs,
           others: this.others,
           programType: this.programType
@@ -482,7 +464,6 @@
           taskManager: this.taskManager,
           jobManagerMemory: this.jobManagerMemory,
           taskManagerMemory: this.taskManagerMemory,
-          executorCores: this.executorCores,
           mainArgs: this.mainArgs,
           others: this.others,
           programType: this.programType
